@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/models"
 	"blog/routers"
 	"blog/utils/logger"
 	"blog/utils/setting"
@@ -9,10 +10,15 @@ import (
 )
 
 func main() {
+	//数据库
+	{
+		db := models.NewDB()
+		db.LogMode(true)
+	}
 	//http服务及路由
 	{
 		r := routers.InitRouteDefault()
-		logger.Info.Println(fmt.Sprintf("监听端口:%d", setting.HTTPPort))
+		logger.Info(fmt.Sprintf("监听端口:%d", setting.HTTPPort))
 		s := &http.Server{
 			Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
 			Handler:        r,
@@ -22,7 +28,7 @@ func main() {
 		}
 		err := s.ListenAndServe()
 		if err != nil {
-			logger.Error.Println(err.Error())
+			logger.Error(err.Error())
 		}
 	}
 }

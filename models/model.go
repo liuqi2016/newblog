@@ -16,7 +16,7 @@ var (
 	db                                                *gorm.DB
 )
 
-func init() {
+func NewDB() (db *gorm.DB) {
 	sec, err := setting.Cfg.GetSection("database")
 	if err != nil {
 		log.Fatal(2, "Fail to get section 'database': %v", err)
@@ -28,7 +28,7 @@ func init() {
 	host = sec.Key("HOST").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
 	//数据库连接
-	db, err := gorm.Open(dbType,
+	db, err = gorm.Open(dbType,
 		fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 			user,
 			password,
@@ -47,10 +47,20 @@ func init() {
 	db.DB().SetMaxOpenConns(100)
 	defer db.Close()
 	// 自动迁移模式
-	// db.AutoMigrate(&Product{})
+	db.AutoMigrate(&Users{})
+	return
 }
+
+// func NewDB() (db *gorm.DB) {
+// 	return db
+// }
 
 //CloseDB 关闭数据库
 func CloseDB() {
 	defer db.Close()
+}
+
+//ID 主键
+type ID struct {
+	ID int64 `json:"id"`
 }

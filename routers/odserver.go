@@ -43,26 +43,26 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case http.MethodGet:
 		{
-			if hm, ok := o.router.GetMapping(req.URL.RequestURI()); ok {
+			if hm, ok := o.router.GetMapping(req.URL.Path); ok {
 				hm.f(w, req)
 			}
 		}
 	case http.MethodPost:
 		{
-			if hm, ok := o.router.PostMapping(req.URL.RequestURI()); ok {
+			if hm, ok := o.router.PostMapping(req.URL.Path); ok {
 				hm.f(w, req)
 			}
 
 		}
 	case http.MethodDelete:
 		{
-			if hm, ok := o.router.DeleteMapping(req.URL.String()); ok {
+			if hm, ok := o.router.DeleteMapping(req.URL.Path); ok {
 				hm.f(w, req)
 			}
 		}
 	case http.MethodPut:
 		{
-			if hm, ok := o.router.PutMapping(req.URL.String()); ok {
+			if hm, ok := o.router.PutMapping(req.URL.Path); ok {
 				hm.f(w, req)
 			}
 		}

@@ -7,3 +7,11 @@ Error:2019/08/09 10:04:33 main.go:25: listen tcp :9090: bind: address already in
 Error:2019/08/09 10:04:36 main.go:25: listen tcp :9090: bind: address already in use
 Error:2019/08/09 10:04:53 main.go:25: listen tcp :9090: bind: address already in use
 Error:2019/08/09 10:05:04 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 10:59:03 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 10:59:08 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 10:59:15 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 11:08:38 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 11:08:47 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 11:34:09 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 14:21:27 main.go:25: listen tcp :9090: bind: address already in use
+Error:2019/08/12 17:17:43 log.go:53: [97;41m listen tcp :9090: bind: address already in use [0m
