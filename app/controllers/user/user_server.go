@@ -8,7 +8,7 @@ import (
 type UserServer interface {
 	Login(w http.ResponseWriter, r *http.Request)
 	TestAdd(w http.ResponseWriter, r *http.Request)
-	GetByToken(w http.ResponseWriter, r *http.Request)
+	GetInfo(w http.ResponseWriter, r *http.Request)
 	Logout(w http.ResponseWriter, r *http.Request)
 }
 
@@ -20,7 +20,7 @@ type LoginOut struct {
 	Token string `json:"token"`
 }
 
-type GetByTokenOut struct {
+type GetInfoOut struct {
 	Roles        string `json:"roles"`
 	Introduction string `json:"introduction"`
 	Avatar       string `json:"avatar"`

@@ -9,6 +9,7 @@ import (
 
 var jwtSecret = []byte(setting.JwtSecret)
 
+//UserInfo 返回信息
 type UserInfo struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -39,15 +40,17 @@ func ParseToken(tokenString string) (userInfo UserInfo, err error) {
 	tokenObj, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+			return userInfo, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
 
 		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		return jwtSecret, nil
 	})
-
+	if err != nil {
+		return userInfo, err
+	}
 	if claims, ok := tokenObj.Claims.(jwt.MapClaims); ok && tokenObj.Valid {
-		fmt.Println(claims["username"], claims["password"])
+		//fmt.Println(claims["username"], claims["password"])
 		userInfo.Username = claims["username"].(string)
 		userInfo.Password = claims["password"].(string)
 	}

@@ -18,7 +18,7 @@ type UserController struct {
 //Login 登陆
 func (c UserController) Login(w http.ResponseWriter, r *http.Request) {
 	rs := controllers.Result{Code: 20000}
-	defer controllers.ReturnJson(w, &rs)
+	defer controllers.ReturnJSON(w, &rs)
 	//1.数据接收
 	r.ParseForm()
 	var decoder = schema.NewDecoder()
@@ -42,7 +42,7 @@ func (c UserController) Login(w http.ResponseWriter, r *http.Request) {
 	user.Password = in.Password
 	user.Get()
 	if user.ID < 1 {
-		rs.Code = 400
+		rs.Code = 60204
 		rs.Data = "username or password is wrong"
 		return
 	}
@@ -61,23 +61,25 @@ func (c UserController) Login(w http.ResponseWriter, r *http.Request) {
 //TestAdd 添加
 func (c UserController) TestAdd(w http.ResponseWriter, r *http.Request) {
 	rs := controllers.Result{Code: 60204}
-	defer controllers.ReturnJson(w, &rs)
+	defer controllers.ReturnJSON(w, &rs)
 	usermodel := c.user
 	if usermodel.AddTest() == false {
 		rs.Code = 400
 	}
 }
 
-// GetByToken 获取记录
-func (u UserController) GetByToken(w http.ResponseWriter, r *http.Request) {
-	rs := controllers.Result{Code: 20000, Data: GetByTokenOut{Roles: "admin", Introduction: "a manager", Avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif", Name: "liuqi"}}
-	defer controllers.ReturnJson(w, &rs)
+// GetInfo 获取记录
+func (u UserController) GetInfo(w http.ResponseWriter, r *http.Request) {
+	userinfo := r.Context().Value("userinfo").(jwt.UserInfo)
+	// fmt.Printf("%+v", userinfo)
+	rs := controllers.Result{Code: 20000, Data: GetInfoOut{Roles: "admin", Introduction: "a manager", Avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif", Name: userinfo.Username}}
+	defer controllers.ReturnJSON(w, &rs)
 	return
 }
 
 // Logout 注销
 func (u UserController) Logout(w http.ResponseWriter, r *http.Request) {
 	rs := controllers.Result{Code: 20000, Data: "success"}
-	defer controllers.ReturnJson(w, &rs)
+	defer controllers.ReturnJSON(w, &rs)
 	return
 }

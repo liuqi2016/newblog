@@ -8,8 +8,9 @@ import (
 
 //Result 统一返回格式
 type Result struct {
-	Code int32       `json:"code"`
-	Data interface{} `json:"data,omitempty"`
+	Code    int32       `json:"code"`
+	Data    interface{} `json:"data,omitempty"`
+	Message string      `json:"Message,omitempty"`
 }
 
 // //Controller 控制器接口
@@ -20,8 +21,8 @@ type Result struct {
 // 	DELETE(w http.ResponseWriter, r *http.Request)
 // }
 
-//result 统一返回
-func ReturnJson(w http.ResponseWriter, r *Result) {
+//ReturnJSON 统一返回
+func ReturnJSON(w http.ResponseWriter, r *Result) {
 	rsJSON, e := json.Marshal(r)
 	if e != nil {
 		fmt.Fprintf(w, e.Error())

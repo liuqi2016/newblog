@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-// InitRouteDefault 初始化默认路由
+// InitRouteDefault 初始化默认路由context
 func InitRouteDefault() (r *OdServer) {
 	r = Default()
 	//用户
@@ -14,18 +14,19 @@ func InitRouteDefault() (r *OdServer) {
 		var i usercontroller.UserServer
 		i = usercontroller.UserController{}
 		r.GET("/user/login", i.Login)
-		r.GET("/user/testadd", i.TestAdd)
-		r.GET("/user/info", i.GetByToken)
-		r.GET("/user/logout", i.Logout)
+		// r.GET("/user/testadd", i.TestAdd)
+		r.GET("/user/info", withJWTMiddle(i.GetInfo))
+		r.GET("/user/logout", withJWTMiddle(i.Logout))
 	}
 	//打印出所有路由
 	for index, v := range r.router {
-		for index2, _ := range v {
+		for index2 := range v {
 			logger.Info(fmt.Sprintf("Method:%s Route:%s", getMethod(index), index2))
 		}
 	}
 	return r
 }
+
 func getMethod(i int) (s string) {
 	switch i {
 	case 0:
