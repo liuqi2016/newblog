@@ -16,7 +16,9 @@ var (
 	db                                                *gorm.DB
 )
 
-func NewDB() (db *gorm.DB) {
+//包内的变量在使用前需要进行一系列初始化操作，这些初始化操作我们又不想在使用包时手工书写，
+//那么将这些初始化的过程放到init函数中，既能在包中变量被使用前完成了初始化，又可以对调用方屏蔽初始化繁琐过程
+func init() {
 	sec, err := setting.Cfg.GetSection("database")
 	if err != nil {
 		log.Fatal(2, "Fail to get section 'database': %v", err)
@@ -38,6 +40,7 @@ func NewDB() (db *gorm.DB) {
 	if err != nil {
 		panic(err)
 	}
+	// defer db.Close()
 	//数据库前缀
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return tablePrefix + defaultTableName
@@ -45,15 +48,14 @@ func NewDB() (db *gorm.DB) {
 	db.SingularTable(true)
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
-	defer db.Close()
 	// 自动迁移模式
 	db.AutoMigrate(&Users{})
-	return
 }
 
-// func NewDB() (db *gorm.DB) {
-// 	return db
-// }
+// //NewDB 返回一个数据库实例
+func NewDB() (d *gorm.DB) {
+	return db
+}
 
 //CloseDB 关闭数据库
 func CloseDB() {

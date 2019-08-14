@@ -4,13 +4,14 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.43.0 // indirect
-	github.com/astaxie/beego v1.12.0
-	github.com/astaxie/session v0.0.0-20130408050157-95d7fe18579c
+	github.com/astaxie/beego v1.12.0 // indirect
+	github.com/astaxie/session v0.0.0-20130408050157-95d7fe18579c // indirect
 	github.com/coreos/bbolt v1.3.3 // indirect
 	github.com/coreos/etcd v3.3.13+incompatible // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20190719114852-fd7a80b32e1f // indirect
 	github.com/cosiner/argv v0.0.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-delve/delve v1.2.0 // indirect
 	github.com/go-ini/ini v1.46.0
 	github.com/go-kit/kit v0.9.0 // indirect
@@ -41,7 +42,6 @@ require (
 	github.com/rogpeppe/fastuuid v1.2.0 // indirect
 	github.com/russross/blackfriday v2.0.0+incompatible // indirect
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
-	github.com/siddontang/go v0.0.0-20180604090527-bdc77568d726
 	github.com/sirupsen/logrus v1.4.2 // indirect
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cobra v0.0.5 // indirect
@@ -58,7 +58,7 @@ require (
 	golang.org/x/tools v0.0.0-20190808195139-e713427fea3f // indirect
 	google.golang.org/genproto v0.0.0-20190801165951-fa694d86fc64 // indirect
 	google.golang.org/grpc v1.22.1 // indirect
-	gopkg.in/go-playground/validator.v8 v8.18.2
+	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 	gopkg.in/go-playground/validator.v9 v9.29.1
 	honnef.co/go/tools v0.0.1-2019.2.2 // indirect
 )

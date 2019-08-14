@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	//数据库
+	// //数据库
 	{
 		db := models.NewDB()
 		db.LogMode(true)

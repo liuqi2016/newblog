@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -45,12 +46,16 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 		{
 			if hm, ok := o.router.GetMapping(req.URL.Path); ok {
 				hm.f(w, req)
+			} else {
+				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
 		}
 	case http.MethodPost:
 		{
 			if hm, ok := o.router.PostMapping(req.URL.Path); ok {
 				hm.f(w, req)
+			} else {
+				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
 
 		}
@@ -58,17 +63,21 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 		{
 			if hm, ok := o.router.DeleteMapping(req.URL.Path); ok {
 				hm.f(w, req)
+			} else {
+				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
 		}
 	case http.MethodPut:
 		{
 			if hm, ok := o.router.PutMapping(req.URL.Path); ok {
 				hm.f(w, req)
+			} else {
+				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
 		}
 	default:
 		{
-
+			fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 		}
 	}
 }

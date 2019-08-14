@@ -8,9 +8,8 @@ import (
 
 //Result 统一返回格式
 type Result struct {
-	Code    int32       `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data,omitempty"`
+	Code int32       `json:"code"`
+	Data interface{} `json:"data,omitempty"`
 }
 
 // //Controller 控制器接口

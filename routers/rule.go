@@ -15,6 +15,8 @@ func InitRouteDefault() (r *OdServer) {
 		i = usercontroller.UserController{}
 		r.GET("/user/login", i.Login)
 		r.GET("/user/testadd", i.TestAdd)
+		r.GET("/user/info", i.GetByToken)
+		r.GET("/user/logout", i.Logout)
 	}
 	//打印出所有路由
 	for index, v := range r.router {
