@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"blog/app/controllers"
+	"context"
 	"fmt"
 	"net/http"
 )
@@ -24,7 +26,8 @@ type HandlerMapped struct {
 }
 
 //HandlerFunc 接口函数单位，即我们编写代码逻辑的函数
-type HandlerFunc func(w http.ResponseWriter, req *http.Request)
+// type HandlerFunc func(w http.ResponseWriter, req *http.Request)
+type HandlerFunc func(c context.Context) (r interface{}, err error)
 
 //Default 默认路由对象 返回 handle集合
 func Default() *OdServer {
@@ -41,11 +44,20 @@ func (o *OdServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 //判断需要执行的Http Method，从而查找对应的接口并且执行
 func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
+	ctx, cancel := context.WithCancel(context.Background())
+	//把请求封装到context
+	ctx = context.WithValue(ctx, "request", req)
+	defer cancel() //释放ctx
 	switch req.Method {
 	case http.MethodGet:
 		{
 			if hm, ok := o.router.GetMapping(req.URL.Path); ok {
-				hm.f(w, req)
+				if rs, err := hm.f(ctx); err != nil {
+					controllers.ReturnJSON(w, err, controllers.FALSE)
+				} else {
+					controllers.ReturnJSON(w, rs, controllers.SUCCESS)
+				}
+
 			} else {
 				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
@@ -53,7 +65,11 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 	case http.MethodPost:
 		{
 			if hm, ok := o.router.PostMapping(req.URL.Path); ok {
-				hm.f(w, req)
+				if rs, err := hm.f(ctx); err != nil {
+					controllers.ReturnJSON(w, err, controllers.FALSE)
+				} else {
+					controllers.ReturnJSON(w, rs, controllers.SUCCESS)
+				}
 			} else {
 				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
@@ -62,7 +78,11 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 	case http.MethodDelete:
 		{
 			if hm, ok := o.router.DeleteMapping(req.URL.Path); ok {
-				hm.f(w, req)
+				if rs, err := hm.f(ctx); err != nil {
+					controllers.ReturnJSON(w, err, controllers.FALSE)
+				} else {
+					controllers.ReturnJSON(w, rs, controllers.SUCCESS)
+				}
 			} else {
 				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}
@@ -70,7 +90,11 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 	case http.MethodPut:
 		{
 			if hm, ok := o.router.PutMapping(req.URL.Path); ok {
-				hm.f(w, req)
+				if rs, err := hm.f(ctx); err != nil {
+					controllers.ReturnJSON(w, err, controllers.FALSE)
+				} else {
+					controllers.ReturnJSON(w, rs, controllers.SUCCESS)
+				}
 			} else {
 				fmt.Fprintln(w, "{\"code\":404,\"data\":\"not find page\"}")
 			}

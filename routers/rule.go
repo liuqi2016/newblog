@@ -1,7 +1,8 @@
 package routers
 
 import (
-	usercontroller "blog/app/controllers/user"
+	"blog/app/controllers/blog"
+	"blog/app/controllers/user"
 	"blog/utils/logger"
 	"fmt"
 )
@@ -11,12 +12,22 @@ func InitRouteDefault() (r *OdServer) {
 	r = Default()
 	//用户
 	{
-		var i usercontroller.UserServer
-		i = usercontroller.UserController{}
-		r.GET("/user/login", i.Login)
-		// r.GET("/user/testadd", i.TestAdd)
-		r.GET("/user/info", withJWTMiddle(i.GetInfo))
-		r.GET("/user/logout", withJWTMiddle(i.Logout))
+		var u user.UserServer
+		u = user.UserController{}
+		r.GET("/user/login", u.Login)
+		r.GET("/user/info", withJWTMiddle(u.GetInfo))
+		r.GET("/user/logout", withJWTMiddle(u.Logout))
+	}
+
+	//博客后台
+	{
+		var b blog.BlogServer
+		b = blog.BlogController{}
+		r.GET("/blog/lists", b.GetByPage)
+		r.GET("/blog/detail", b.GetOne)
+		r.POST("/blog/edit", withJWTMiddle(b.SaveOrUpdate))
+		// r.GET("/blog/list", withJWTMiddle(blog.GetByPage))
+		// r.GET("/blog/save", withJWTMiddle(blog.SaveOrUpdate))
 	}
 	//打印出所有路由
 	for index, v := range r.router {

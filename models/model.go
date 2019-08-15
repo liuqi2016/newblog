@@ -49,7 +49,7 @@ func init() {
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
 	// 自动迁移模式
-	db.AutoMigrate(&Users{})
+	db.AutoMigrate(&User{}, &Blog{})
 }
 
 // //NewDB 返回一个数据库实例

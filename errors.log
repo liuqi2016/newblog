@@ -31,3 +31,7 @@ Error:2019/08/14 19:58:09 log.go:53: [97;41m 上下文失败 [0m
 Error:2019/08/14 19:59:33 log.go:53: [97;41m 上下文失败 [0m
 Error:2019/08/14 20:14:36 log.go:53: [97;41m listen tcp :8080: bind: address already in use [0m
 Error:2019/08/14 20:22:39 log.go:53: [97;41m listen tcp :8080: bind: address already in use [0m
+Error:2019/08/15 14:41:45 log.go:53: [97;41m listen tcp :8080: bind: address already in use [0m
+Error:2019/08/15 19:41:35 log.go:53: [97;41m listen tcp :8080: bind: address already in use [0m
+Error:2019/08/15 19:44:17 log.go:53: [97;41m listen tcp :8080: bind: address already in use [0m
+Error:2019/08/15 20:09:53 log.go:53: [97;41m listen tcp :8080: bind: address already in use [0m

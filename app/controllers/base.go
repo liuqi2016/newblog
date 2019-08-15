@@ -6,23 +6,30 @@ import (
 	"net/http"
 )
 
+const (
+	SUCCESS = iota
+	FALSE
+)
+
 //Result 统一返回格式
 type Result struct {
 	Code    int32       `json:"code"`
-	Data    interface{} `json:"data,omitempty"`
 	Message string      `json:"Message,omitempty"`
+	Data    interface{} `json:"data,omitempty"`
 }
 
-// //Controller 控制器接口
-// type Controller interface {
-// 	GET(w http.ResponseWriter, r *http.Request)
-// 	POST(w http.ResponseWriter, r *http.Request)
-// 	PUT(w http.ResponseWriter, r *http.Request)
-// 	DELETE(w http.ResponseWriter, r *http.Request)
-// }
-
 //ReturnJSON 统一返回
-func ReturnJSON(w http.ResponseWriter, r *Result) {
+func ReturnJSON(w http.ResponseWriter, data interface{}, float int) {
+	r := Result{}
+	r.Data = data
+	if float == 0 {
+		r.Code = 200
+		r.Message = "success"
+	} else {
+		r.Code = 400
+		r.Message = "false"
+		r.Data = data.(error).Error()
+	}
 	rsJSON, e := json.Marshal(r)
 	if e != nil {
 		fmt.Fprintf(w, e.Error())

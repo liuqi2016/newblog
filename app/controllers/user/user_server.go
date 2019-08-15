@@ -1,15 +1,13 @@
-package usercontroller
+package user
 
-import (
-	"net/http"
-)
+import "context"
 
 // Controller 控制器接口
 type UserServer interface {
-	Login(w http.ResponseWriter, r *http.Request)
-	TestAdd(w http.ResponseWriter, r *http.Request)
-	GetInfo(w http.ResponseWriter, r *http.Request)
-	Logout(w http.ResponseWriter, r *http.Request)
+	Login(ctx context.Context) (r interface{}, err error)
+	TestAdd(ctx context.Context) (r interface{}, err error)
+	GetInfo(ctx context.Context) (r interface{}, err error)
+	Logout(ctx context.Context) (r interface{}, err error)
 }
 
 type LoginIn struct {
@@ -25,4 +23,7 @@ type GetInfoOut struct {
 	Introduction string `json:"introduction"`
 	Avatar       string `json:"avatar"`
 	Name         string `json:"name"`
+}
+type SearchByNameIn struct {
+	Username string `json:"username" validate:"required"`
 }
