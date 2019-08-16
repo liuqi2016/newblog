@@ -1,6 +1,8 @@
 package models
 
 import (
+	"context"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -19,8 +21,11 @@ func (b *Blog) Get() {
 }
 
 // GetByPage 根据分页查询
-func (b *Blog) GetByPage() (blogs []Blog, err []error) {
-	db.Where(&b).Find(&blogs).GetErrors()
+func (b *Blog) GetByPage(ctx context.Context) (blogs []Blog, err error) {
+	db := ctx.Value("where").(*gorm.DB)
+	if errs := db.Find(&blogs).GetErrors(); len(errs) > 0 {
+		err = errs[0]
+	}
 	return
 }
 

@@ -2,6 +2,7 @@ package routers
 
 import (
 	"blog/app/controllers"
+	"blog/models"
 	"context"
 	"fmt"
 	"net/http"
@@ -47,6 +48,9 @@ func (o *OdServer) doHandler(w http.ResponseWriter, req *http.Request) {
 	ctx, cancel := context.WithCancel(context.Background())
 	//把请求封装到context
 	ctx = context.WithValue(ctx, "request", req)
+	//封装db实例
+	db := models.NewDB()
+	ctx = context.WithValue(ctx, "db", db)
 	defer cancel() //释放ctx
 	switch req.Method {
 	case http.MethodGet:

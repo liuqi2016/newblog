@@ -5,7 +5,7 @@ import "context"
 // Controller 控制器接口
 type UserServer interface {
 	Login(ctx context.Context) (r interface{}, err error)
-	TestAdd(ctx context.Context) (r interface{}, err error)
+	SaveOrUpdate(ctx context.Context) (r interface{}, err error)
 	GetInfo(ctx context.Context) (r interface{}, err error)
 	Logout(ctx context.Context) (r interface{}, err error)
 }

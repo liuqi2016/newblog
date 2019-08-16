@@ -4,6 +4,7 @@ import (
 	"blog/models"
 	"blog/utils/jwt"
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -51,13 +52,28 @@ func (c UserController) Login(ctx context.Context) (rs interface{}, err error) {
 	return
 }
 
-//TestAdd 添加
-func (c UserController) TestAdd(ctx context.Context) (rs interface{}, err error) {
-	// r := ctx.Value("request").(*http.Request)
-	usermodel := c.user
-	if usermodel.AddTest() == false {
-		return nil, errors.New("失败")
+//SaveOrUpdate 编辑或者新增
+func (c UserController) SaveOrUpdate(ctx context.Context) (rs interface{}, err error) {
+	r := ctx.Value("request").(*http.Request)
+	user := c.user
+	if err = json.NewDecoder(r.Body).Decode(&user); err != nil {
+		return
 	}
+	if err = validator.New().Struct(user); err != nil {
+		return
+	}
+	if user.ID > 0 {
+		if errs := user.Save(ctx); len(errs) > 0 {
+			return nil, errs[0]
+		}
+	} else {
+		if errs := user.Create(ctx); len(errs) > 0 {
+			return nil, errs[0]
+		}
+	}
+	// if usermodel.AddTest() == false {
+	// 	return nil, errors.New("失败")
+	// }
 	return
 }
 

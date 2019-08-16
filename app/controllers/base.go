@@ -14,7 +14,7 @@ const (
 //Result 统一返回格式
 type Result struct {
 	Code    int32       `json:"code"`
-	Message string      `json:"Message,omitempty"`
+	Message string      `json:"message,omitempty"`
 	Data    interface{} `json:"data,omitempty"`
 }
 

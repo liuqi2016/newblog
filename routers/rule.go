@@ -16,6 +16,7 @@ func InitRouteDefault() (r *OdServer) {
 		u = user.UserController{}
 		r.GET("/user/login", u.Login)
 		r.GET("/user/info", withJWTMiddle(u.GetInfo))
+		r.GET("/user/edit", withJWTMiddle(u.SaveOrUpdate))
 		r.GET("/user/logout", withJWTMiddle(u.Logout))
 	}
 
